@@ -9,17 +9,15 @@ class Person
         @bank_account = 25
         @happiness = 8
         @hygiene = 8 
+       
     end
 
-    def happiness=(happiness)
- 
-        if happiness > 10
-           @happiness = 10
-        elsif happiness < 0
-           @happiness = 0
-        else 
-            @happiness = happiness
-        end
+    def happiness=(num)
+        @happiness = num
+        @happiness = 10 if @happiness > 10
+          
+        @happiness = 0 if @happiness < 0
+  
     end
 
    def hygiene=(hygiene)
@@ -40,6 +38,7 @@ class Person
             false
         end
     end
+    #binding.pry
 
     def clean?
         if hygiene > 7 
@@ -69,24 +68,30 @@ class Person
    end
 
     def call_friend(friend)
-       self.happiness = @happiness + 3
-       friend.happiness = @happiness + 3
+        [self, friend].each do |instance| 
+            instance.happiness += 3
+        end
+          "Hi #{friend.name}! It's #{self.name}. How are you?"
      end
 
 
    def start_conversation(friend, topic)
-        politics = @happiness -= 2
-        weather = @happiness += 1
-        other = @happiness
-        if topic = politics
-            "blah blah partisan blah lobbyist"
-        elsif topic = weather
-            "blah blah sun blah rain"
-        else topic = other
-            "blah blah blah blah blah"
-        end
-    end
-end
+        if topic == "politics"
+            [self, friend].each do |instance| 
+                instance.happiness -= 2 
+            end
+                "blah blah partisan blah lobbyist"
 
+        elsif topic == "weather"
+            [self, friend].each do |instance| 
+                instance.happiness += 1
+            end
+             "blah blah sun blah rain"
+
+        else
+             "blah blah blah blah blah"
+    end
+ end
+end
 
 
